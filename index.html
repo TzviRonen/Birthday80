@@ -195,6 +195,37 @@
             font-weight: 500;
         }
 
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            color: #666;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 20;
+        }
+
+        .close-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: #333;
+            transform: scale(1.1);
+        }
+
+        .close-button.show {
+            display: flex;
+        }
+
         .error-message {
             display: none;
             background: linear-gradient(135deg, #f56565, #e53e3e);
@@ -491,7 +522,8 @@
     </div>
 
     <div class="scroll-container">
-        <div class="container">
+        <div class="container" id="mainContainer">
+            <div class="close-button" id="closeButton" onclick="closeForm()">×</div>
             <span class="birthday-icon">🎂</span>
             <h1>יום הולדת 80 לאילן</h1>
             
@@ -713,6 +745,7 @@
                 document.querySelector('.container').style.transform = 'scale(0.95)';
                 setTimeout(() => {
                     document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('closeButton').classList.add('show');
                     document.querySelector('.container').style.transform = 'scale(1)';
                     createConfetti();
                 }, 200);
@@ -783,6 +816,17 @@
                     confetti.remove();
                 }, 5000);
             }
+        }
+
+        function closeForm() {
+            const container = document.getElementById('mainContainer');
+            container.style.transition = 'all 0.5s ease';
+            container.style.transform = 'scale(0)';
+            container.style.opacity = '0';
+            
+            setTimeout(() => {
+                container.style.display = 'none';
+            }, 500);
         }
 
         // Add CSS animation for confetti
